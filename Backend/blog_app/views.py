@@ -6,3 +6,8 @@ from .models import Blogs
 class BlogscreateViews(generics.ListCreateAPIView):
     queryset=Blogs.objects.all()
     serializer_class=BlogsSerializers
+ 
+class blogUpdateDeleteViews(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Blogs.objects.all()
+    serializer_class=BlogsSerializers
+        
