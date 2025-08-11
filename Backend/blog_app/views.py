@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from .serializers import BlogsSerializers,Registration,customLoginSerializer
-from rest_framework import generics
+from .serializers import BlogsSerializers,Registration,customLoginSerializer,ProfileSerializer
+from rest_framework import generics,permissions
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Blogs
+from .models import Blogs,Profile
 # Create your views here.
 class BlogscreateViews(generics.ListCreateAPIView):
     queryset=Blogs.objects.all()
@@ -17,6 +17,7 @@ class blogUpdateDeleteViews(generics.RetrieveUpdateDestroyAPIView):
 @api_view(['POST'])
 def register_user(request):
     serializers=Registration(data=request.data)
+    print(serializers)
     if serializers.is_valid():
         serializers.save()
         # print(new_user.email)
@@ -29,3 +30,13 @@ def login_user(request):
     if serializer.is_valid():
         return Response(serializer.validated_data,status=status.HTTP_200_OK)
     return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)        
+
+class ProfileView(generics.RetrieveUpdateAPIView):
+    serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        # Ensure profile exists for logged-in user
+        profile, created = Profile.objects.get_or_create(user=self.request.user)
+        return profile
+
