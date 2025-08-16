@@ -1,0 +1,22 @@
+.navbar{
+    width: 100%;
+    color: azure;
+     display: flex;
+  justify-content: space-between; /* pushes items apart */
+  align-items: center;
+z-index: 1; 
+}
+.blogger{
+    font-weight: 600;
+    font-size: 20px;
+}
+.logo{
+    margin-left: 50px;
+}
+.toggler{
+    height: 50px;
+    width: 50px;
+
+}
+
+
