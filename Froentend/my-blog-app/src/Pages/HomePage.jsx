@@ -33,7 +33,6 @@ function HomePage() {
 
   return (
     <>
-<Navbar/>
     <section className="hero-section" style={{backgroundColor:bgcolor}}>
      
       {/* Text content */}
