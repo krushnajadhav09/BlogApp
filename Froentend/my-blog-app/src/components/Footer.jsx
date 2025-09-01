@@ -3,8 +3,8 @@ import '../Styles/footer.css'
 function Footer() {
   return (
 <>
-    <footer class="bg-dark text-white pt-4 pb-2 ">
-  <div class="container">
+    <footer class="bg-dark text-white  " style={{position:"relative", height:"260px", }}>
+  <div class="container" style={{position:"relative",top:"30px"}}>
     <div class="row">
       <div class="col-md-4 col-12 mb-3">
         <h5>About Us</h5>

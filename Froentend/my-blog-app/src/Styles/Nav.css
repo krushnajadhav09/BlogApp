@@ -1,14 +1,19 @@
+
+
 .navbar{
     width: 100%;
-    color: azure;
+    color: red;
      display: flex;
   justify-content: space-between; /* pushes items apart */
   align-items: center;
 z-index: 1; 
+
+
 }
 .blogger{
     font-weight: 600;
     font-size: 20px;
+    color: white;
 }
 .logo{
     margin-left: 50px;
@@ -25,6 +30,10 @@ z-index: 1;
     all: unset;
     cursor: pointer;
 }
+.custom-logout{
+    color: black;
+    font-size: 15px;
+}
 i{
     color: white;
     /* border: 2px solid black; */
@@ -35,9 +44,9 @@ i{
     top: 5px;
 }
 .box{
-    height: 5 0vh;
+    height: 50vh;
     width:250px;
-    margin-left: -65px;
+    /* margin-left: -65px; */
 }
 .container a{
     font-size: 18px;
@@ -45,3 +54,18 @@ i{
     text-decoration: none;
   font-family: Aptos Display;
 }
+.menuopen{
+    background-color:black ;
+    width:300px;
+    margin-left: 60px;
+    position: relative;
+    left: -50px;
+}
+.scrollednav{
+background-color: rgba(0, 0, 0, 0.959); /* Dark background */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+position: relative;
+top: -10px;
+height: 65px;
+}  
+

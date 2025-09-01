@@ -1,0 +1,29 @@
+.main_container{
+    height: 100vh;
+    border: 3px solid black;
+  background: linear-gradient(135deg,#01E6AD,#0072ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', sans-serif;
+ 
+}
+.custum-error{
+  font-size: 13px
+}
+
+
+.container_create-blogs{
+    width: 70%;
+    border-radius: 10px;
+  background: #fff;
+  box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.651);
+
+}
+.btn-create {
+    width: 100%;
+    border: none;
+}
+.form-label_create_blog{
+    font-size: 16px;
+}

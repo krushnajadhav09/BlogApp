@@ -1,11 +1,12 @@
 /* Center the form vertically & horizontally */
 .login-container {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg,#01E6AD,#0072ff);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;  /* Full height */
-  background: linear-gradient(135deg, #1f1e21e3 0%, #020914 100%);
-  padding: 20px;
+  height: 100vh;
 }
 
 /* Card style */
