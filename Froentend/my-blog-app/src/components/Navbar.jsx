@@ -10,7 +10,10 @@ function Navbar() {
   const [scrolled,setscrolled] =  useState();
   const navigate = useNavigate();
   const location = useLocation();
+  const storedUser=localStorage.getItem("user")
+  const user = storedUser ? JSON.parse(storedUser) : null;
 
+console.log(user)
   useEffect(()=>{
     const handlescroll =()=>{
       const isscrolled=window.scrollY > 0;
@@ -23,6 +26,9 @@ function Navbar() {
   const handleLogin = () => {
     navigate("/login");
   };
+  const HandleProfile =()=>{
+    navigate("/Profile")
+  }
   const HandleClickBlogs = ()=>{
     navigate("/showBlogs")
   }
@@ -31,7 +37,7 @@ function Navbar() {
   }
   const HandleClickCreate=()=>{
     if (!access_token){
-      navigate("/login")
+      toast.error("login required ....!")
     }
     navigate("/create_blogs")
   }
@@ -40,21 +46,40 @@ const access_token=localStorage.getItem("access_token")
   useEffect(() => {
     setMenuOpen(false);
   }, [location]);
-  const handleLogout = (e) =>{
-    e.preventDefault()
-  const confirm= window.confirm("you are sure for logout ")
-  if(confirm){
+const handleLogout = (e) => {
+  e.preventDefault();
+  const confirm = window.confirm("Are you sure you want to logout?");
+  
+  const toastId = "logout-toast"; // Unique toast ID
+
+  // Always dismiss existing toast with same ID before showing a new one
+  toast.dismiss(toastId);
+
+  if (confirm) {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-      localStorage.removeItem("user");
-      toast.success("logout succesfully")
-setTimeout(()=>{
-    navigate("/")
-  },2000)
-  }else{
-    toast.error("logout canceled")
+    localStorage.removeItem("user");
+
+    toast.success("Logout successfully", {
+      toastId: toastId,
+      autoClose: 2000,       // Toast disappears after 2 seconds
+      closeOnClick: true,
+      draggable: true
+    });
+
+    setTimeout(() => {
+      navigate("/");         // Navigate AFTER toast disappears
+    }, 2200);                // Give 200ms buffer after toast
+  } else {
+    toast.error("Logout cancelled", {
+      toastId: toastId,
+      autoClose: 2000,
+      closeOnClick: true,
+      draggable: true
+    });
   }
-  }
+};
+
 
   return (
     <nav className={`navbar position-fixed`}>
@@ -93,7 +118,7 @@ setTimeout(()=>{
             onClick={handleLogout}
             type="button"
           >
-            Logout
+            LOG OUT
           </button>
           )
           
@@ -113,15 +138,17 @@ setTimeout(()=>{
                 <hr />
                 <button className="btn btn-success" onClick={HandleClickCreate} style={{textDecoration:"none", color:"white", marginLeft:"-10px"}}>create Blogs</button>
 <hr/>
-                <i className="fa-solid fa-user"></i>
-                <a href="/Profile">Profile</a>
+                <button className="fa-solid fa-user btn btn-link" style={{textDecoration:"none"}} onClick={HandleProfile}></button>
+                <button  className="btn btn-link" style={{textDecoration:"none", color:"white", fontSize:"17px"}} onClick={HandleProfile}> {user?.first_name }  {user?.last_name }</button>
                 <hr />
               </div>
             </div>
           </div>
+
         </div>
       )}
-      <ToastContainer autoClose={1500} toastClassName="custom-logout"/>
+                  <ToastContainer   theme="light" toastClassName="custom-logout"/>
+
     </nav>
   );
 }

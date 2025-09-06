@@ -6,6 +6,8 @@ import redimage from '../assets/redcolorimg.png'
 import greenimg from '../assets/greencolorimg.png'
 import blueimg from '../assets/bluecolorimg.png'
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+
 
 function HomePage() {
    const navigate=useNavigate()
@@ -39,7 +41,7 @@ function HomePage() {
     navigate("/Create_blogs");
   } else {
     // user not logged in
-    navigate("/login");
+    toast.error("Login Required : please login to create blogs..!")
   }
   };
 
@@ -54,6 +56,7 @@ function HomePage() {
             <div className='bgimages'>
         <img src={bgimages} height={400} width={600}  alt="background Image"   className={`image ${fade ? "fade-out" : "fade-in"} 'imagesBG'`}
  />
+ <ToastContainer position='top-center' theme='light'/>
       </div>
     </section>
     </>

@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+// import api from '../Api/Api'; // 👈 Import the Axios instance
+
 
 function Create_blogs() {
   const [title, setTitle] = useState("");
@@ -66,10 +68,10 @@ catch (err) {
   
 
   return (
-    <div className='main_container'>
-    <h2 className=' ' style={{position:"absolute", top:"36px", left:"280px",color:"lightblack"}}>Create your blog here......!</h2>
-
-    <div className="container container_create-blogs" style={{ position: "absolute", top: "120px",marginTop:"-30px", padding:"15px" }}>
+    <div className='main_container container-fluid'>
+<div className='row'>    <h2 className='col-12 ' style={{position:"absolute", top:"36px", left:"280px",color:"lightblack"}}>Create your blog here......!</h2>
+</div>
+    <div className="container_create-blogs" style={{ position: "absolute", top: "120px",marginTop:"-30px", padding:"15px" }}>
 
       {/* Title Input */}
       <div className="mb-3">
@@ -140,7 +142,7 @@ catch (err) {
       </button>
     </div>
     <ToastContainer   autoClose={4000}
-toastClassName="custum-error"/>
+toastClassName="custum-error" position='top-center' theme='light'/>
     </div>
     
   );

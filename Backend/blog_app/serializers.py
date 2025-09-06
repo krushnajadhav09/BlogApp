@@ -1,20 +1,27 @@
-from .models import Blogs,Profile
+from .models import Blogs,Profile,Comment
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class BlogsSerializers(serializers.ModelSerializer):
+    author_name = serializers.CharField(source='author.username', read_only=True)
     image = serializers.ImageField(use_url=True)
     username = serializers.CharField(source='user.username', read_only=True)
+    formatted_date = serializers.SerializerMethodField()
+
     class Meta():
         model=Blogs
         fields='__all__'
-
+    def get_formatted_date(self, obj):
+        return obj.formatted_date
 class Registration(serializers.ModelSerializer):
     password=serializers.CharField(write_only=True)        
     password2=serializers.CharField(write_only=True)    
-    
+    first_name = serializers.CharField(required=True    )
+    last_name=serializers.CharField()
+    email=serializers.CharField()
+
     class Meta():
         model=User
         fields=['first_name','last_name','username','email','password','password2']
@@ -32,7 +39,7 @@ class Registration(serializers.ModelSerializer):
         if ' ' in value:
             raise serializers.ValidationError('username space is no allowed in username')
         if len(value) < 4:
-            raise serializers.ValidationError("username username  must be atleast 4 charater long")
+            raise serializers.ValidationError(" username  must be atleast 4 charater long")
         return value      
     
     def validate_email(self,value):
@@ -52,7 +59,7 @@ class Registration(serializers.ModelSerializer):
         if len(value) < 3:
             raise serializers.ValidationError("last name must be more than 3 character")
         return value
-    def validate_passwor(self,value):
+    def validate_password(self,value):
         if len(value)< 5: 
             raise serializers.ValidationError("password is must be 5 include  character")
         return value
@@ -82,7 +89,19 @@ class customLoginSerializer(serializers.Serializer):
         }
 
 class ProfileSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username', read_only=True)
     class Meta:
         model=Profile
-        fields=['id','username','bio', 'profile_picture', 'location', 'birth_date']
+        fields=['id','bio', 'profile_picture', 'location', 'birth_date']
+        
+class CommentSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(read_only=True)  # show username instead of ID
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'blog', 'user', 'content', 'created_at']
+        read_only_fields = ['user', 'created_at']
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        validated_data['user'] = request.user
+        return super().create(validated_data)

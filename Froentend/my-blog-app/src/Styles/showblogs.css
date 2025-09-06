@@ -15,15 +15,14 @@
   margin-bottom:50px;
 }
 .Blog_txt{
-  font-family: cursive;
   position: relative;
   font-size: 33px;
   width: 50%;
   top: 70px;
   left: 65px;
+  font-weight: bold ;
   margin-bottom: 70px;
-  color:#555;
-}
+color: BLACK;}
 /* .card-container{
   border: 2px solid black;
   margin-bottom: 10px;
@@ -33,6 +32,11 @@
   position: relative;
   height: 200px;
   overflow: hidden;
+}
+.main-container-showblogs{
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg,#01E6AD,#0072ff);
 }
 
 .card-image img {

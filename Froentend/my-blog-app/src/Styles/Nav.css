@@ -8,8 +8,11 @@
   align-items: center;
 z-index: 1; 
 
-
 }
+.fa-user{
+    font-size: 17px;
+}
+
 .blogger{
     font-weight: 600;
     font-size: 20px;
@@ -31,7 +34,7 @@ z-index: 1;
     cursor: pointer;
 }
 .custom-logout{
-    color: black;
+    color: white;
     font-size: 15px;
 }
 i{

@@ -5,6 +5,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function Login() {
+  const [UserData,SetUserData]=useState();
 const  navigate=useNavigate()
   const [loginData,setLoginData]=useState({
     username:"",
@@ -83,7 +84,7 @@ const handleSubmit = async (e) => {
           Don't have account? <Link to="/Register"> Register</Link>
         </form>
       </div>
-      <ToastContainer autoClose={2000}/>
+      <ToastContainer autoClose={2000} position='top-center' theme='light'/>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import '../Styles/register.css';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 const RegistrationForm = () => {
@@ -30,12 +31,32 @@ const RegistrationForm = () => {
     	try{
 		const res=await axios.post("http://127.0.0.1:8000/api/register/",formData)
 		console.log(res)
+    toast.success("registration succesfull")
+  setTimeout(()=>{
     navigate("/login")
+  },2000)
 	}catch (err){
-console.log("this is error",err)
+  const errorData = err.response?.data;
+  
+    if (errorData) {
+      // Loop through error fields from Django API and show each one
+      for (const field in errorData) {
+        const messages = errorData[field];
+        if (Array.isArray(messages)) {
+          messages.forEach((msg) => {
+            toast.error(`${field}: ${msg}`,{className:"custum-error"});
+          });
+        } else {
+          toast.error(`${field}: ${messages}`,{className:"custum-error"});
+        }
+      }
+    } else {
+      // Fallback error
+      toast.error("An unexpected error occurred.");
+    }
    }
     // Add validation or API calls here
-    console.log(formData);
+    // console.log(formData);
   };
 
   return (
@@ -58,6 +79,7 @@ console.log("this is error",err)
         <p className="signin-link">Already have an account?<Link to="/login"> login</Link> </p> 
       </form>
     </div>
+    <ToastContainer autoClose={1000} position='top-center' theme='light'/>
     </div>
   );
 };

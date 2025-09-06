@@ -6,6 +6,7 @@ import "../Styles/showblogs.css"; // external CSS
 function ShowBlogs() {
   const [blogs, setBlogs] = useState([]);
 
+
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
@@ -20,8 +21,9 @@ function ShowBlogs() {
   }, []);
 
   return (
- <div className="card-container">
- <h3 className="Blog_txt">Your blogs.........!</h3>
+    <div className="main-container-showblogs">
+ <div className=" container-fluid card-container">
+ <h3 className="Blog_txt ">Blogs.........!</h3>
       {blogs.length > 0 ? (
         blogs.map((blog, index) => (
           <div className="card" key={index}>
@@ -63,6 +65,7 @@ function ShowBlogs() {
       ) : (
         <p>Loading blogs...</p>
       )}
+    </div>
     </div>
   );
 }

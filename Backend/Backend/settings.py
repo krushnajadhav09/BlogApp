@@ -11,22 +11,35 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+print("✅ ACCESS_TOKEN_LIFETIME_MINUTES:", config('ACCESS_TOKEN_LIFETIME_MINUTES'))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+b1_f0!)-hka1lm@e=wh8+vz-9atkb0+)_627+=8fbuva4t5uk'
-
+SECRET_KEY = config('DJANGO_SECRET_KEY', default='fallback-secret-key')
+DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(
+        minutes=int(config('ACCESS_TOKEN_LIFETIME_MINUTES', default=1))
+    ),
+    'REFRESH_TOKEN_LIFETIME': timedelta(
+        days=int(config('REFRESH_TOKEN_LIFETIME_DAYS', default=7))
+    ),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
 
 # Application definition
 
@@ -39,6 +52,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog_app.apps.BlogAppConfig',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
+    'corsheaders',
+
 
 ]
 REST_FRAMEWORK = {
@@ -50,12 +66,15 @@ REST_FRAMEWORK = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+CORS_ALLOW_ALL_ORIGINS = True   # (For development, later restrict to frontend domain)
+
 
 ROOT_URLCONF = 'Backend.urls'
 

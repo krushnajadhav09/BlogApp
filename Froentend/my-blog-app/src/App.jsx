@@ -9,6 +9,8 @@ import PrivateRoute from "./PrivateRoutes";
 import Create_blogs from "./Pages/create_blogs";
 import ShowBlogs from "./Pages/showBlogs";
 import Register from "./Pages/Register";
+import Profile from "./Pages/Profile";
+import EditProfile from "./Pages/EditProfile";
 
 function App() {
   return (
@@ -28,6 +30,11 @@ function App() {
               <Create_blogs/>
             </PrivateRoute>}/>
             <Route path="/showBlogs" element={<ShowBlogs/>}/>
+            <Route path="/Profile" element={
+              <PrivateRoute>
+           <Profile/>
+           </PrivateRoute>} />
+           <Route path="/EditProfile" element={<EditProfile/>}/>
          
         </Route>
       </Routes>
