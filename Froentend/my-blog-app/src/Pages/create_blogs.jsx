@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import '../Styles/CreateBlog.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
+// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// import api from '../Api/Api'; // 👈 Import the Axios instance
-
+import Api from '../Api/Api';
 
 function Create_blogs() {
   const [title, setTitle] = useState("");
@@ -28,9 +27,9 @@ function Create_blogs() {
       formData.append("Type", type);
       formData.append("Description",Description)
 
-      const res = await axios.post("http://127.0.0.1:8000/api/blogs/", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const res = await Api.post("/blogs/", formData, {
+        headers: { 
+          // Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });

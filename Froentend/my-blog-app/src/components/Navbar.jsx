@@ -16,7 +16,7 @@ function Navbar() {
 console.log(user)
   useEffect(()=>{
     const handlescroll =()=>{
-      const isscrolled=window.scrollY > 0;
+      const isscrolled=(window.scrollY > 36);
       setscrolled(isscrolled)
     }
      window.addEventListener("scroll",handlescroll)
@@ -101,8 +101,6 @@ const handleLogout = (e) => {
             <span className="blogger">Blogger</span>
           </div>
         </a>
-        
-
         <form className="d-flex">
           {/* ✅ fixed: no more submit */}
           { !access_token ? (
@@ -139,7 +137,7 @@ const handleLogout = (e) => {
                 <button className="btn btn-success" onClick={HandleClickCreate} style={{textDecoration:"none", color:"white", marginLeft:"-10px"}}>create Blogs</button>
 <hr/>
                 <button className="fa-solid fa-user btn btn-link" style={{textDecoration:"none"}} onClick={HandleProfile}></button>
-                <button  className="btn btn-link" style={{textDecoration:"none", color:"white", fontSize:"17px"}} onClick={HandleProfile}> {user?.first_name }  {user?.last_name }</button>
+                <button  className="btn btn-link" style={{textDecoration:"none", color:"white", fontSize:"17px"}} onClick={HandleProfile}> {user?.first_name ||"user not find" }  {user?.last_name } </button>
                 <hr />
               </div>
             </div>

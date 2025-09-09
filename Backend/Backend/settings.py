@@ -31,15 +31,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(
-        minutes=int(config('ACCESS_TOKEN_LIFETIME_MINUTES', default=1))
-    ),
-    'REFRESH_TOKEN_LIFETIME': timedelta(
-        days=int(config('REFRESH_TOKEN_LIFETIME_DAYS', default=7))
-    ),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=30),  
+
 }
+
 
 # Application definition
 
@@ -58,10 +53,13 @@ INSTALLED_APPS = [
 
 ]
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 6,
 }
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

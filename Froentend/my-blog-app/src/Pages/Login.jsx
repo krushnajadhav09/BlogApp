@@ -14,7 +14,7 @@ const  navigate=useNavigate()
 // const handlechange = (e) =>{
 //   setLoginData({
 //     ...loginData,[e.target.name]:e.target.value
-
+  
 //   });
 // }
 const handleChange = (e)=>{
@@ -54,9 +54,8 @@ const handleSubmit = async (e) => {
     navigate("/")
   },2000)
 
-  } catch (err) {
-    console.error("Login failed ❌", err.response?.data);
-
+  } catch (error) {
+    toast.error(error.response?.data?.non_field_errors?.[0]);
     setLoginData({
       username: "",
       password: "",
@@ -69,16 +68,16 @@ const handleSubmit = async (e) => {
     <div className="login-container">
       <div className="login-card shadow-lg p-4 rounded">
         <h2 className="text-center mb-4">Login</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Username</label>
-            <input type="text" value={loginData.username} autoComplete="off" name="username" className="form-control" onChange={handleChange} placeholder="Enter your username" />
-          </div>
+            <input type="text" value={loginData.username} autoComplete="off" name="username" className="form-control" required onChange={handleChange} placeholder="Enter your username" />
+          </div>  
           <div className="mb-3">
             <label className="form-label">Password</label>
-            <input type="password"  className="form-control" autoComplete="off" name="password" onChange={handleChange} placeholder="Enter your password" />
+            <input type="password" value={loginData.password} className="form-control" autoComplete="off" name="password"  required onChange={handleChange} placeholder="Enter your password" />
           </div>
-          <button className="btn btn-primary w-100" type="submit" onClick={handleSubmit}>Login</button>
+          <button className="btn btn-primary w-100" type="submit">Login</button>
           <br></br>
           <hr/>
           Don't have account? <Link to="/Register"> Register</Link>

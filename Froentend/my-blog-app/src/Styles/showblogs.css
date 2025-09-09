@@ -14,6 +14,9 @@
   top: 30px;
   margin-bottom:50px;
 }
+.pagebtn{
+  background-color: orangered;
+}
 .Blog_txt{
   position: relative;
   font-size: 33px;

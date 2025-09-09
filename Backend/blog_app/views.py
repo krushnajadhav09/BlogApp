@@ -1,20 +1,21 @@
 from django.shortcuts import render
 from .serializers import BlogsSerializers,Registration,customLoginSerializer,ProfileSerializer,CommentSerializer
-from rest_framework import generics,permissions
+from rest_framework import generics,permissions,filters
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
 from .models import Blogs,Profile,Comment
 from .permissions import IsOwnerOrReadOnly
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.views import APIView
-
+from rest_framework.views import APIView 
 
 # Create your views here.
 class BlogscreateViews(generics.ListCreateAPIView):
-    queryset=Blogs.objects.all()
+    queryset=Blogs.objects.all().order_by('-created_at')
     serializer_class=BlogsSerializers
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends=[filters.SearchFilter]
+    search_fields=['Type']
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)  # a
 class blogUpdateDeleteViews(generics.RetrieveUpdateDestroyAPIView):

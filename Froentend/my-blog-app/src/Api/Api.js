@@ -1,31 +1,23 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
 
 const Api = axios.create({
-
-  baseURL: 'http://localhost:8000/api', // your API base URL
+  baseURL: 'http://localhost:8000/api',
 });
 
-Api.interceptors.response.use(
-
-  (response) => response,
-  (error) => {
-    if (
-      error.response &&
-      error.response.status === 401 &&
-      error.response.data?.code === 'token_not_valid'
-    ) {
-      // Token is invalid or expired
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-      navigate('login') // or use navigate('/login')
+// Attach token to every request if exists
+Api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`; 
     }
-
-const navigate=useNavigate()
-
+    return config;
+  },
+  (error) => {
     return Promise.reject(error);
   }
 );
+
+// Handle 401 errors globally
 
 export default Api;

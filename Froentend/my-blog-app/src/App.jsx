@@ -11,8 +11,14 @@ import ShowBlogs from "./Pages/showBlogs";
 import Register from "./Pages/Register";
 import Profile from "./Pages/Profile";
 import EditProfile from "./Pages/EditProfile";
+import { useEffect } from 'react';
+import { setupAutoLogout } from './utils/auth';
+
 
 function App() {
+  useEffect(() => {
+    setupAutoLogout();
+  }, []);
   return (
     <BrowserRouter>
       <Routes>
